@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { ConnectWallet } from "@thirdweb-dev/react";
 
 import { useStateContext } from "../context";
 import { CustomButton } from "./";
@@ -30,15 +31,16 @@ function Navbar() {
         </div>
       </div>
       <div className="sm:flex hidden flex-row justify-end gap-4">
-        <CustomButton
-          btnType="button"
-          title={address ? "Create A Campaign" : "Connect"}
-          styles={address ? "bg-[#1dc071]" : "bg-[#8c6dfd]"}
-          handleClick={() => {
-            if (address) navigate("create-campaign");
-            else connect();
-          }}
-        />
+        {!address ? (
+          <ConnectWallet />
+        ) : (
+          <CustomButton
+            btnType="button"
+            title="Create A Campaign"
+            styles="bg-[#1dc071]"
+            handleClick={() => navigate("create-campaign")}
+          />
+        )}
 
         <Link to="/profile">
           <div className="w-[52px] h-[52px] rounded-full bg-[#2c2f32] flex justify-center items-center cursor-pointer">
@@ -101,15 +103,16 @@ function Navbar() {
           </ul>
 
           <div className="flex mx-4">
-            <CustomButton
-              btnType="button"
-              title={address ? "Create a campaign" : "Connect"}
-              styles={address ? "bg-[#1dc071]" : "bg-[#8c6dfd]"}
-              handleClick={() => {
-                if (address) navigate("create-campaign");
-                else connect();
-              }}
-            />
+            {!address ? (
+              <ConnectWallet />
+            ) : (
+              <CustomButton
+                btnType="button"
+                title="Create A Campaign"
+                styles="bg-[#1dc071]"
+                handleClick={() => navigate("create-campaign")}
+              />
+            )}
           </div>
         </div>
       </div>
