@@ -9,36 +9,35 @@ import {
 
 export const navlinks = [
   {
-    name: "dashboard",
+    name: "Home",
     imgUrl: dashboard,
     link: "/",
   },
   {
-    name: "campaign",
+    name: "Create campaign",
     imgUrl: createCampaign,
     link: "/create-campaign",
   },
   {
-    name: "payment",
+    name: "Payment",
     imgUrl: payment,
     link: "/",
     disabled: true,
   },
   {
-    name: "withdraw",
+    name: "Withdraw",
     imgUrl: withdraw,
     link: "/",
     disabled: true,
   },
   {
-    name: "profile",
+    name: "Profile",
     imgUrl: profile,
     link: "/profile",
   },
   {
-    name: "logout",
+    name: "Logout",
     imgUrl: logout,
     link: "/",
-    disabled: true,
   },
 ];

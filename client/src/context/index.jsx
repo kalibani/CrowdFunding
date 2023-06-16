@@ -1,12 +1,29 @@
-import React, { useContext, createContext } from "react";
+import React, { useContext, createContext, useState, useEffect } from "react";
 
-import { useAddress, useContract, useContractWrite } from "@thirdweb-dev/react";
+import {
+  useAddress,
+  useContract,
+  useContractWrite,
+  useDisconnect,
+} from "@thirdweb-dev/react";
 
 import { ethers } from "ethers";
 
 const StateContext = createContext();
 
 export const StateContextProvider = ({ children }) => {
+  const [campaigns, setCampaigns] = useState([]);
+  const [masterCampaigns, setMasterCampaigns] = useState([]);
+  const [masterUserCampaigns, setMasterUserCampaigns] = useState([]);
+  const [userCampaigns, setUserCampaigns] = useState([]);
+  const [query, setQuery] = useState("");
+  const [activeTab, setActiveTab] = useState("Home");
+
+  useEffect(() => {
+    const tab = localStorage.getItem("activeTab");
+    if (tab) setActiveTab(tab);
+  }, []);
+
   const { contract } = useContract(
     "0x491Cfd302ecba1Eb431C75a850A4EEd6F6699B60"
   );
@@ -39,7 +56,7 @@ export const StateContextProvider = ({ children }) => {
   const getCampaigns = async () => {
     const campaigns = await contract.call("getCampaigns");
 
-    const parsedCampaings = campaigns.map((campaign, i) => ({
+    const parsedCampaigns = campaigns.map((campaign, i) => ({
       owner: campaign.owner,
       title: campaign.title,
       description: campaign.description,
@@ -52,7 +69,9 @@ export const StateContextProvider = ({ children }) => {
       pId: i,
     }));
 
-    return parsedCampaings;
+    setMasterCampaigns(parsedCampaigns);
+    setCampaigns(parsedCampaigns);
+    return parsedCampaigns;
   };
 
   const getUserCampaigns = async () => {
@@ -62,10 +81,62 @@ export const StateContextProvider = ({ children }) => {
       (campaign) => campaign.owner === address
     );
 
-    console.log("filteredCampaigns", filteredCampaigns);
-
+    setMasterUserCampaigns(filteredCampaigns);
+    setUserCampaigns(filteredCampaigns);
     return filteredCampaigns;
   };
+
+  const donate = async (pId, amount) => {
+    const data = await contract.call("donateToCampaign", [pId], {
+      value: ethers.utils.parseEther(amount),
+    });
+
+    return data;
+  };
+
+  const getDonations = async (pId) => {
+    const donations = await contract.call("getDonators", [pId]);
+    const numberOfDonations = donations[0].length;
+
+    const parsedDonations = [];
+
+    for (let i = 0; i < numberOfDonations; i++) {
+      parsedDonations.push({
+        donator: donations[0][i],
+        donation: ethers.utils.formatEther(donations[1][i].toString()),
+      });
+    }
+
+    return parsedDonations;
+  };
+
+  // page is coming from where is the search being used
+  const searchCampaign = (q, page) => {
+    if (!q) {
+      page === "Home"
+        ? setCampaigns(masterCampaigns)
+        : setUserCampaigns(masterUserCampaigns);
+      setQuery("");
+      return;
+    }
+    setQuery(q);
+    let updatedCampaigns =
+      page === "Home" ? [...masterCampaigns] : [...masterUserCampaigns];
+    updatedCampaigns = updatedCampaigns.filter((item) => {
+      return item?.title.toLowerCase().indexOf(q.toLowerCase()) !== -1;
+    });
+
+    page === "Home"
+      ? setCampaigns(updatedCampaigns)
+      : setUserCampaigns(updatedCampaigns);
+  };
+
+  const handleActiveTab = (tab) => {
+    setActiveTab(tab);
+    localStorage.setItem("activeTab", tab);
+  };
+
+  const disconnect = useDisconnect();
 
   return (
     <StateContext.Provider
@@ -75,6 +146,15 @@ export const StateContextProvider = ({ children }) => {
         createCampaign: publishCampaign,
         getCampaigns,
         getUserCampaigns,
+        donate,
+        getDonations,
+        searchCampaign,
+        campaigns,
+        userCampaigns,
+        query,
+        activeTab,
+        handleActiveTab,
+        disconnect,
       }}
     >
       {children}

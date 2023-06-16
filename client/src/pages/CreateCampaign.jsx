@@ -10,7 +10,7 @@ import { checkIfImage } from "../utils";
 function CreateCampaign() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const { createCampaign } = useStateContext();
+  const { createCampaign, address, handleActiveTab } = useStateContext();
   const [form, setForm] = useState({
     name: "",
     title: "",
@@ -36,6 +36,7 @@ function CreateCampaign() {
         });
         setIsLoading(false);
         navigate("/");
+        handleActiveTab("Home");
       } else {
         alert("Provide valid image URL");
         setForm({ ...form, image: "" });
@@ -120,8 +121,11 @@ function CreateCampaign() {
         <div className="flex justify-center items-center mt-[40px]">
           <CustomButton
             btnType="submit"
-            title="Submit new campaign"
-            styles="bg-[#1dc071]"
+            title={
+              address ? "Submit new campaign" : "Please connect your wallet"
+            }
+            styles={address ? "bg-[#1dc071]" : "bg-[grey]"}
+            disabled={!address}
           />
         </div>
       </form>

@@ -4,26 +4,35 @@ import { DisplayCampaigns } from "../components";
 import { useStateContext } from "../context";
 function Profile() {
   const [isLoading, setIsLoading] = useState(false);
-  const [campaigns, setCampaigns] = useState([]);
+  const [emptyTitle, setEmptyTitle] = useState("");
 
-  const { address, contract, getUserCampaigns } = useStateContext();
+  const { address, contract, getUserCampaigns, userCampaigns, query } =
+    useStateContext();
 
   const fetchCampaigns = async () => {
     setIsLoading(true);
-    const data = await getUserCampaigns();
-    setCampaigns(data);
+    await getUserCampaigns();
     setIsLoading(false);
   };
 
   useEffect(() => {
-    if (contract) fetchCampaigns();
-  }, [address, contract]);
+    if (contract && !query) fetchCampaigns();
+  }, [address, contract, query]);
+
+  useEffect(() => {
+    if (query && userCampaigns.length === 0) {
+      const text = `No result found for query '${query}'`;
+      setEmptyTitle(text);
+    }
+  }, [query]);
 
   return (
     <DisplayCampaigns
       title="All Campaigns"
+      emptyTitle={emptyTitle}
       isLoading={isLoading}
-      campaigns={campaigns}
+      campaigns={userCampaigns}
+      address={address}
     />
   );
 }
