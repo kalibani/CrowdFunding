@@ -29,10 +29,10 @@ function Home() {
   return (
     <>
       <Meta
-        title="Campaign now"
+        title="Crowd Funding | Create A Campaign now"
         description="description"
         descriptionContent="Support the project for no reward, just because it speaks to you"
-        src="https://thirdweb.com/sepolia/0x491Cfd302ecba1Eb431C75a850A4EEd6F6699B60/explorer"
+        src="https://crowd-funding-kautzar.vercel.app/"
         keywordsContent="crowdfunding, campaign, fund"
       />
       <DisplayCampaigns

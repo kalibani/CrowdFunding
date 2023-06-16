@@ -19,7 +19,7 @@ Crowd Funding Platform - This is a Web3 Decentralized Application Built in Smart
 
 ### Development
 
-In the project directory, you can run:
+In the client project directory, you can run:
 
 Install Dependencies:
 

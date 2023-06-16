@@ -40,9 +40,9 @@ function Campaign() {
   return (
     <div>
       <Meta
-        title={`Campaign now | ${state?.title}`}
+        title={`Donate now | ${state?.title}`}
         descriptionContent={state?.description}
-        src="https://thirdweb.com/sepolia/0x491Cfd302ecba1Eb431C75a850A4EEd6F6699B60/explorer"
+        src="https://crowd-funding-kautzar.vercel.app/"
         keywordsContent="crowdfunding, campaign, fund"
       />
       {isLoading && <Loader />}

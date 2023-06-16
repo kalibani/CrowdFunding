@@ -1,7 +1,6 @@
 import React from "react";
 import { tagType, thirdweb } from "../assets";
 import { daysLeft } from "../utils";
-import Meta from "./Meta";
 
 function FundCard({
   pId,
@@ -18,13 +17,6 @@ function FundCard({
 
   return (
     <>
-      <Meta
-        title={`Campaign now | ${title}`}
-        descriptionContent={description}
-        src="https://thirdweb.com/sepolia/0x491Cfd302ecba1Eb431C75a850A4EEd6F6699B60/explorer"
-        keywordsContent="crowdfunding, campaign, fund"
-      />
-
       <div
         className="sm:w-[288px] w-full rounded-[15px] bg-[#1c1c24] cursor-pointer"
         onClick={handleClick}
