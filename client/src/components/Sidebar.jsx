@@ -13,6 +13,7 @@ function Sidebar({ activeTab, setActiveTab, handleLogout, address }) {
       if (link.name === "Logout") {
         handleLogout();
         setActiveTab("Home");
+        navigate(link.link);
       } else {
         setActiveTab(link.name);
         navigate(link.link);

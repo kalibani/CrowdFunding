@@ -19,6 +19,7 @@ function Navbar({ activeTab, setActiveTab, handleLogout }) {
         handleLogout();
         setActiveTab("Home");
         setToggleDrawer(false);
+        navigate(link.link);
       } else {
         setActiveTab(link.name);
         setToggleDrawer(false);
