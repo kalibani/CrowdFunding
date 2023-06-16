@@ -1,6 +1,6 @@
-# [Crowd Funding App](https://open-sea-blockchain.vercel.app/) - Web 3.0 Smart Contract Implementation
+# [Crowd Funding App](https://crowd-funding-kautzar.vercel.app/) - Web 3.0 Smart Contract Implementation
 
-![Image1](https://github.com/kalibani/CrowdFunding/blob/main/assets/ScreenShot1.png)
+![Image1](https://github.com/kalibani/CrowdFunding/blob/main/client/src/assets/Screenshot.png)
 
 ## Introduction
 
