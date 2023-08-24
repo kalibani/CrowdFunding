@@ -4,6 +4,8 @@
 
 ## Introduction
 
+## Please use Sepolio Test Network to access the site!
+
 Crowd Funding Platform - This is a Web3 Decentralized Application Built in Smart Contract - Solidity, React JS, Tailwind css and other Web 3.0 methodologies such as Thirdweb and Metamask
 
 ## Available Feature
